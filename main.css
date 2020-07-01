@@ -21,8 +21,12 @@
     margin-left: auto;
     margin-right: auto;
   }
-  .todo td, .doing td, .review td, .done td{
+  .todo tbody td, .doing td, .review td, .done td{
     background-color:#ffffb2;
+  }
+  .todo tfoot td{
+   text-align: left;
+   border: none;
   }
   #overlay{
     /*　要素を重ねた時の順番　*/
@@ -43,9 +47,10 @@
   
   }
   #content{
-  z-index:2;
-  width:50%;
-  padding: 1em;
-  background:#fff;
-}
+    z-index:2;
+    width:30%;
+    padding: 1em;
+    padding-left: 6em;
+    background-color: #ffffcc;
+  }
   
