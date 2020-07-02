@@ -3,11 +3,13 @@ var app = new Vue({
     data: {
       showContent: false,
       showDetails: false,
-      addStoryName: '',
-      addStoryContents: '',
-      storyName: '',
-      storyContents: '',
-      selected:'',
+      // addStoryName: '',
+      // addStoryContents: '',
+      // storyName: '',
+      // storyContents: '',
+      // selected: '',
+      // changeID: '',
+      storyCount: 100,
       options: [
         { id: 1, name: 'Todo' },
         { id: 2, name: 'Doing' },
@@ -23,12 +25,22 @@ var app = new Vue({
       { id: 6, name: "ストーリー6", contents: "内容6", status: 4},
       { id: 7, name: "ストーリー7", contents: "内容7", status: 4}]
     },
+    computed:{
+      doneLength:function(){
+        return this.todos.filter(function(val) {
+          return val.status == 4 ;
+        })
+      }
+    },
     methods:{
       openModal: function(){
         this.showContent = true
       },
       closeModal: function(){
         this.showContent = false
+      },
+      stopModal: function(){
+        event.stopPropagation()
       },
       openModalDetails: function(item){
         this.showDetails = true
@@ -42,7 +54,7 @@ var app = new Vue({
       },
       addItem: function(){
         this.todos.push({
-          id: this.todos.length+1,
+          id: this.storyCount,
           name: this.addStoryName,
           contents: this.addStoryContents,
           status: 1
@@ -50,14 +62,21 @@ var app = new Vue({
         this.showContent = false
         this.addStoryName = ''
         this.addStoryContents = ''
+        this.storyCount = this.storyCount + 1
       },
       changeItem: function(){
-        this.todos.splice(this.changeID-1,1,{
+        index = this.todos.findIndex((todo) => todo.id === this.changeID)
+        this.todos.splice(index,1,{
           id: this.changeID,
           name: this.storyName,
           contents: this.storyContents,
           status: this.selected
         })
+        this.showDetails = false
+      },
+      removeItem: function(){
+        index = this.todos.findIndex((todo) => todo.id === this.changeID)
+        this.todos.splice(index,1)
         this.showDetails = false
       }
     }
